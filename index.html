@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Functional To Do</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+  <main>
+    <section ng-controller="TodoController as $ctrl">
+
+      <div class="header">
+        <h2>TODO List</h2>
+        <p>A place to store the things you have to do!</p>
+        <input type="text" placeholder="Filter" ng-model="$ctrl.newTodo.filter">
+        <input ng-hide="$ctrl.todoArray.length === 0" ng-model="ctrl.newTodo.filter" type="text" placeholder="Filter your to-dos">
+      </div>
+
+      <div class="content" ng-repeat="item in $ctrl.todoArray | filter:$ctrl.newTodo.filter">
+        <p>{{$index + 1}}.</p>
+        <button class="completeButton" ng-click="item.completed=true" ng-if="!item.completed">Complete</button>
+        <p class="newItem" editable-text="item.task" ng-class="{completed: item.completed}">{{item.task}}</p>
+        <i class="far fa-trash-alt" ng-click="$ctrl.removeTask($index)"></i>
+      </div>
+
+      <form class="footer" ng-submit="$ctrl.addTask($ctrl.newTodo);">
+        <input type="text" ng-model="$ctrl.newTodo.task" placeholder="Add your to do">
+        <button class="addButton">Add</button>
+      </form>
+
+    </section>
+  </main>
+
+  <script src="https://code.angularjs.org/1.6.5/angular.js"></script>
+  <script src="app.module.js"></script>
+  <script src="app.controller.js"></script>
+  <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+
+</body>
+</html>
